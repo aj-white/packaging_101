@@ -80,11 +80,10 @@ def ordinal_suffix_3(n: int) -> str:
 ```python
 def ordinal_suffix_4(n: int) -> str:
     suffixes = ("th", "st", "nd", "rd") + ("th",) * 10
-    day_ = n % 100
     if n > 13:
-        return f"{suffixes[day_ % 10]}"
+        return suffixes[day_ % 10]
     else:
-        return f"{suffixes[day_]}"
+        return suffixes[day_]
 ```
 
 #### Performance testing
