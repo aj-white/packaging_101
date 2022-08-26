@@ -76,7 +76,7 @@ def ordinal_suffix_3(n: int) -> str:
     return suffixes.get(day_, "th")
 ```
 
-4. A final, more esoteric approach
+4. A more esoteric approach
 ```python
 def ordinal_suffix_4(n: int) -> str:
     suffixes = ("th", "st", "nd", "rd") + ("th",) * 10
@@ -86,9 +86,37 @@ def ordinal_suffix_4(n: int) -> str:
         return suffixes[day_]
 ```
 
+5. Combination of previous ideas
+```python
+def ordinal_suffix_5(n: int) -> str:
+    suffixes = ("th", "st", "nd", "rd")
+    if n in (11, 12, 13):
+        return suffixes[0]
+    last = n % 10
+    if last > 3:
+        return suffixes[0]
+    return suffixes[last]
+ ```
+ 
+ 6. Another combination
+ ```python
+ def ordinal_suffix_6(n:int) -> str:
+    last = n if n < 20 else n % 10
+    if last == 1:
+         return "st"
+    if last == 2:
+        return "nd"
+    if last == 3:
+        return "rd"
+    return "th"
+```
+
+
 #### Performance testing
 Using a rather unscientific approach I put all the above functions in a jupyter notebook and ran the following code for each function.
-The numbers are an attempt to get an even spread of "st", "nd", "rd" and "th"s, because I'm lazy and couldn't be bothered to wait for 1 - 31 to finish.
+The numbers are an attempt to get an even spread of "st", "nd", "rd" and "th"s, because I'm lazy and couldn't be bothered to wait for range(1, 32) to finish.
+These were tested under python 3.10 on an old laptop Core i5 2430M, 6Gb RAM, Nvidia GT55M 2Gb GPU
+
 
 ```python
 timings = []
@@ -99,9 +127,17 @@ for i in (1,2,3,4,5,6,10,11,19,20,21,22,23,25):
 avg_time = sum(timings) / len(timings) * 1000000000  -- to get answer in nanoseconds
 ```
 
-Results:
-1. 438 ns
-2. 331 ns
-3. 545 ns
-4. 332 ns
+#### Results
+
+|Function Name|Average Run Time (ns)|
+|-------------|---------------------|
+|ordinal_suffix_1|422|
+|ordinal_suffix_2|298|
+|ordinal_suffix_3|516|
+|ordinal_suffix_4|251|
+|ordinal_suffix_5|397|
+|ordinal_suffix_6|386|
+
+`Ordinal_suffix_4` is the winner.
+
 
