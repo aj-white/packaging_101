@@ -29,8 +29,8 @@ I decided on the following requirements, it must have at least one 3rd party dep
 Welcome to datestyler, my new package. One thing python does not have is a built in way to create ordinal dates, e.g. `21st May 2020`. I am going to write a package that will convert datetimes and dates to ordinal date strings and also parse date strings into ordinal dates.
 
 #### Example
-`datetime(2022, 12, 12)` -> `12th December 2022`
-`22/05/2021` -> `22nd May 2021`
+- `datetime(2022, 12, 12)` -> `12th December 2022`
+- `22/05/2021` -> `22nd May 2021`
 
 #### Dependencies
 To parse date strings I will use the [python-dateutil](https://dateutil.readthedocs.io/en/stable/) library
@@ -140,4 +140,16 @@ avg_time = sum(timings) / len(timings) * 1000000000  -- to get answer in nanosec
 
 `Ordinal_suffix_4` is the winner.
 
+### My Current Standard Packaging Workflow
 
+- `virtualenv` to create a virtual environment (faster than standard library `venv`, injects more up to date `pip`, `setuptools` and `wheel` (`venv` does not add `wheel`)
+- `pip-tools` to manage dependencies
+- `build` - pep517 build tool
+- `twine` to upload to pypi
+
+config files used:
+- 'pyptoject.toml` - for setuptools build and black, isort, mypy configuration
+- `setup.cfg` - static metadata, flake8 configuration and to enable edititable installs.
+
+#### PEP 660
+No need for `setup.cfg`
